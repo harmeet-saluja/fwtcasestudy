@@ -12,6 +12,13 @@ public class Screen {
 		this.name = name;
 	}
 
+	public Screen(int id, String name, Movie movie) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.movie = movie;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -38,7 +45,7 @@ public class Screen {
 
 	@Override
 	public String toString() {
-		return "Screen [id=" + id + ", name=" + name + "]";
+		return "Screen [id=" + id + ", name=" + name + ", movie=" + movie + "]";
 	}
 
 }

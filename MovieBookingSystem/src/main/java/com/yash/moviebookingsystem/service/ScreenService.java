@@ -7,6 +7,6 @@ public interface ScreenService {
 
 	public int addScreen(Screen screen);
 
-	public int addMovieToScreen(Movie movie);
+	public int addMovieToScreen(Screen screen, Movie movie);
 
 }

@@ -15,16 +15,29 @@ public class ScreenServiceImpl implements ScreenService {
 	}
 
 	public int addScreen(Screen screen) {
-		if (screen == null)
-			throw new NullFieldException("Screen cannot be null");
+		checkForNullScreen(screen);
 		int rowsAffected = screenDAO.save(screen);
 		return rowsAffected;
 	}
 
-	public int addMovieToScreen(Movie movie) {
+	private void checkForNullScreen(Screen screen) {
+		if (screen == null)
+			throw new NullFieldException("Screen cannot be null");
+	}
+
+	public int addMovieToScreen(Screen screen, Movie movie) {
+		checkForNullmovie(movie);
+		int rowsAffected = 0;
+		screen.setMovie(movie);
+		int result = screenDAO.update(screen);
+		if (result > 0)
+			rowsAffected = result;
+		return rowsAffected;
+	}
+
+	private void checkForNullmovie(Movie movie) {
 		if (movie == null)
 			throw new NullFieldException("Movie cannot be null");
-		return 0;
 	}
 
 }

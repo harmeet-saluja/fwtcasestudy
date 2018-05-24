@@ -6,4 +6,6 @@ public interface ScreenDAO {
 
 	public int save(Screen screen);
 
+	public int update(Screen screen);
+
 }
