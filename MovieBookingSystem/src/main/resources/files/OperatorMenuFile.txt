@@ -1,0 +1,12 @@
+********MOVIE BOOKING SYSTEM********
+1. Add Screen
+2. Add Movie To Screen
+3. Design Seating Arrangement
+4. Add Shows for Movie
+5. Book Ticket
+6. Cancel Booking
+7. Show Seats Availability
+8. Reports
+9. Exit
+*************************************
+Enter Choice:
