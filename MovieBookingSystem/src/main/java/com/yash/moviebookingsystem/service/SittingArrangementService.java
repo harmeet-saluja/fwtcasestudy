@@ -10,6 +10,6 @@ public interface SittingArrangementService {
 	public final String CATEGORY_SILVER = "SILVER";
 	public final String CATEGORY_PLATINUM = "PLATINUM";
 
-	public List<Row> createArrangement(String category, Integer numberOfRowsInCategory, Integer numberOfSeatsInFirstRow);
+	public List<Row> createSittingArrangementForCategory(String category, Integer numberOfRowsInCategory, Integer numberOfSeatsInFirstRow);
 
 }
