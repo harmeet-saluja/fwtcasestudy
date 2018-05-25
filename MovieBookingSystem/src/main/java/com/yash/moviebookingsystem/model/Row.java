@@ -8,6 +8,12 @@ public class Row {
 	private List<Seat> seats;
 	private String category;
 
+	public Row(int id, String category) {
+		super();
+		this.id = id;
+		this.category = category;
+	}
+
 	public int getId() {
 		return id;
 	}

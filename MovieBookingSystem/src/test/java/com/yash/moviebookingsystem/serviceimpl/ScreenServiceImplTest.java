@@ -1,30 +1,38 @@
 package com.yash.moviebookingsystem.serviceimpl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.yash.moviebookingsystem.dao.ScreenDAO;
+import com.yash.moviebookingsystem.exception.DataAlreadyExistsException;
+import com.yash.moviebookingsystem.exception.ListSizeExceededException;
 import com.yash.moviebookingsystem.exception.NullFieldException;
 import com.yash.moviebookingsystem.model.Movie;
+import com.yash.moviebookingsystem.model.Row;
 import com.yash.moviebookingsystem.model.Screen;
 import com.yash.moviebookingsystem.service.ScreenService;
+import com.yash.moviebookingsystem.service.SittingArrangementService;
 
 public class ScreenServiceImplTest {
 
 	private ScreenDAO screenDAO;
 	private ScreenService screenService;
+	private SittingArrangementService sittingArrangementService;
 
 	@Before
 	public void setUp() throws Exception {
 		this.screenDAO = mock(ScreenDAO.class);
-		this.screenService = new ScreenServiceImpl(this.screenDAO);
+		this.sittingArrangementService = new SittingArrangementServiceImpl();
+		this.screenService = new ScreenServiceImpl(this.screenDAO, sittingArrangementService);
 	}
 
 	@Test(expected = NullFieldException.class)
@@ -39,6 +47,22 @@ public class ScreenServiceImplTest {
 		when(screenDAO.save(any(Screen.class))).thenReturn(1);
 		int rowsAffected = screenService.addScreen(screen);
 		assertEquals(1, rowsAffected);
+	}
+
+	@Test(expected = ListSizeExceededException.class)
+	public void addScreen_ScreenObjectGiven_ThrowListSizeExceededExceptionWhenThreeScreenAlreadyPresent() {
+		List<Screen> screens = Arrays.asList(new Screen(1, "Audi 1"), new Screen(2, "Audi 2"), new Screen(3, "Audi 3"));
+		when(screenDAO.retrieve()).thenReturn(screens);
+		when(screenDAO.save(any(Screen.class))).thenThrow(ListSizeExceededException.class);
+		screenService.addScreen(new Screen(4, "Audi 4"));
+	}
+
+	@Test(expected = DataAlreadyExistsException.class)
+	public void addScreen_ScreenObjectGiven_ThrowDataAlreadyExistsExceptionWhenScreenAlreadyPresent() {
+		List<Screen> screens = Arrays.asList(new Screen(1, "Audi 1"), new Screen(2, "Audi 2"));
+		when(screenDAO.retrieve()).thenReturn(screens);
+		when(screenDAO.save(any(Screen.class))).thenThrow(DataAlreadyExistsException.class);
+		screenService.addScreen(new Screen(4, "Audi 1"));
 	}
 
 	@Test(expected = NullFieldException.class)
@@ -64,6 +88,30 @@ public class ScreenServiceImplTest {
 		when(screenDAO.update(any(Screen.class))).thenReturn(0);
 		int rowsAffected = screenService.addMovieToScreen(screen, movie);
 		assertEquals(0, rowsAffected);
+	}
+
+	@Test(expected = NullFieldException.class)
+	public void addMovieToScreen_ScreenObjectIsNull_ThrowNullFieldException() {
+		Movie movie = new Movie(1, "PK", "Aamir", Arrays.asList("Aamir", "Anushka"));
+		Screen screen = null;
+		when(screenDAO.update(any(Screen.class))).thenReturn(0);
+		screenService.addMovieToScreen(screen, movie);
+	}
+
+	@Test(expected = NullFieldException.class)
+	public void addRowsToScreen_RowsListIsNull_ThrowNullFieldException() {
+		List<Row> rows = null;
+		Screen screen = new Screen(3, "Audi 3");
+		screenService.addRowsToScreen(screen, rows);
+	}
+
+	@Test
+	public void addRowsToScreen_ListOfRowsGiven_ShouldReturnTrue() {
+		Screen screen = new Screen(3, "Audi 3");
+		List<Row> rows = sittingArrangementService
+				.createSittingArrangementForCategory(SittingArrangementService.CATEGORY_GOLD, 6, 14);
+		boolean areRowsAdded = screenService.addRowsToScreen(screen, rows);
+		assertTrue(areRowsAdded);
 	}
 
 }

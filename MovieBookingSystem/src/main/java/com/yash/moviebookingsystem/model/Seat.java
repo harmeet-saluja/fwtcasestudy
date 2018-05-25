@@ -5,6 +5,12 @@ public class Seat {
 	private int id;
 	private boolean bookedStatus;
 
+	public Seat(int id, boolean bookedStatus) {
+		super();
+		this.id = id;
+		this.bookedStatus = bookedStatus;
+	}
+
 	public int getId() {
 		return id;
 	}

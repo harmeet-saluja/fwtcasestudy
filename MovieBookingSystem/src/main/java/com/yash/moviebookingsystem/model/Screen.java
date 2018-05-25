@@ -1,22 +1,27 @@
 package com.yash.moviebookingsystem.model;
 
+import java.util.List;
+
 public class Screen {
 
 	private int id;
 	private String name;
 	private Movie movie;
+	private List<Row> rows;
 
 	public Screen(int id, String name) {
-		super();
 		this.id = id;
 		this.name = name;
 	}
 
 	public Screen(int id, String name, Movie movie) {
-		super();
-		this.id = id;
-		this.name = name;
+		this(id, name);
 		this.movie = movie;
+	}
+
+	public Screen(int id, String name, Movie movie, List<Row> rows) {
+		this(id, name, movie);
+		this.rows = rows;
 	}
 
 	public int getId() {
@@ -43,9 +48,17 @@ public class Screen {
 		this.name = name;
 	}
 
+	public void setRows(List<Row> rows) {
+		this.rows = rows;
+	}
+
+	public List<Row> getRows() {
+		return rows;
+	}
+
 	@Override
 	public String toString() {
-		return "Screen [id=" + id + ", name=" + name + ", movie=" + movie + "]";
+		return "Screen [id=" + id + ", name=" + name + ", movie=" + movie + ", rows=\n" + rows + "]";
 	}
 
 }
