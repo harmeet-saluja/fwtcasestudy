@@ -9,17 +9,21 @@ import com.yash.moviebookingsystem.exception.NullFieldException;
 import com.yash.moviebookingsystem.model.Movie;
 import com.yash.moviebookingsystem.model.Row;
 import com.yash.moviebookingsystem.model.Screen;
+import com.yash.moviebookingsystem.service.MovieService;
 import com.yash.moviebookingsystem.service.ScreenService;
 import com.yash.moviebookingsystem.service.SittingArrangementService;
 
 public class ScreenServiceImpl implements ScreenService {
 
-	ScreenDAO screenDAO;
-	SittingArrangementService sittingArrangementService;
+	private ScreenDAO screenDAO;
+	private SittingArrangementService sittingArrangementService;
+	private MovieService movieService;
 
-	public ScreenServiceImpl(ScreenDAO screenDAO, SittingArrangementService sittingArrangementService) {
+	public ScreenServiceImpl(ScreenDAO screenDAO, SittingArrangementService sittingArrangementService,
+			MovieService movieService) {
 		this.screenDAO = screenDAO;
 		this.sittingArrangementService = sittingArrangementService;
+		this.movieService = movieService;
 	}
 
 	public int addScreen(Screen screen) {
@@ -51,6 +55,8 @@ public class ScreenServiceImpl implements ScreenService {
 	public int addMovieToScreen(Screen screen, Movie movie) {
 		checkForNullmovie(movie);
 		checkForNullScreen(screen);
+		if (movie.getShows() == null)
+			throw new NullFieldException("Shows in movies cannot be null");
 		int rowsAffected = 0;
 		screen.setMovie(movie);
 		int result = screenDAO.update(screen);

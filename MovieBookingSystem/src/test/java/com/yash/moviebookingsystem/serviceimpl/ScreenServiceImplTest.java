@@ -19,6 +19,8 @@ import com.yash.moviebookingsystem.exception.NullFieldException;
 import com.yash.moviebookingsystem.model.Movie;
 import com.yash.moviebookingsystem.model.Row;
 import com.yash.moviebookingsystem.model.Screen;
+import com.yash.moviebookingsystem.model.Show;
+import com.yash.moviebookingsystem.service.MovieService;
 import com.yash.moviebookingsystem.service.ScreenService;
 import com.yash.moviebookingsystem.service.SittingArrangementService;
 
@@ -27,12 +29,14 @@ public class ScreenServiceImplTest {
 	private ScreenDAO screenDAO;
 	private ScreenService screenService;
 	private SittingArrangementService sittingArrangementService;
+	private MovieService movieService;
 
 	@Before
 	public void setUp() throws Exception {
 		this.screenDAO = mock(ScreenDAO.class);
 		this.sittingArrangementService = new SittingArrangementServiceImpl();
-		this.screenService = new ScreenServiceImpl(this.screenDAO, sittingArrangementService);
+		this.movieService = new MovieServiceImpl();
+		this.screenService = new ScreenServiceImpl(this.screenDAO, this.sittingArrangementService, this.movieService);
 	}
 
 	@Test(expected = NullFieldException.class)
@@ -72,9 +76,19 @@ public class ScreenServiceImplTest {
 		screenService.addMovieToScreen(screen, movie);
 	}
 
+	@Test(expected = NullFieldException.class)
+	public void addMovieToScreen_ShowsInMovieAreNull_ShouldReturnOneWhenMovieAdded() {
+		Movie movie = new Movie(1, "PK", "Aamir", Arrays.asList("Aamir", "Anushka"));
+		Screen screen = new Screen(2, "Audi 2");
+		when(screenDAO.update(any(Screen.class))).thenReturn(1);
+		int rowsAffected = screenService.addMovieToScreen(screen, movie);
+		assertEquals(1, rowsAffected);
+	}
+
 	@Test
 	public void addMovieToScreen_MovieObjectIsGiven_ShouldReturnOneWhenMovieAdded() {
 		Movie movie = new Movie(1, "PK", "Aamir", Arrays.asList("Aamir", "Anushka"));
+		movie.setShows(Arrays.asList(new Show(1, "12:00 PM", "03:00 PM"), new Show(2, "09:00 PM", "06:00 PM")));
 		Screen screen = new Screen(2, "Audi 2");
 		when(screenDAO.update(any(Screen.class))).thenReturn(1);
 		int rowsAffected = screenService.addMovieToScreen(screen, movie);
@@ -84,6 +98,7 @@ public class ScreenServiceImplTest {
 	@Test
 	public void addMovieToScreen_MovieObjectIsGiven_ShouldReturnZeroWhenMovieNotAdded() {
 		Movie movie = new Movie(1, "PK", "Aamir", Arrays.asList("Aamir", "Anushka"));
+		movie.setShows(Arrays.asList(new Show(1, "12:00 PM", "03:00 PM"), new Show(2, "09:00 PM", "06:00 PM")));
 		Screen screen = new Screen(2, "Audi 2");
 		when(screenDAO.update(any(Screen.class))).thenReturn(0);
 		int rowsAffected = screenService.addMovieToScreen(screen, movie);
