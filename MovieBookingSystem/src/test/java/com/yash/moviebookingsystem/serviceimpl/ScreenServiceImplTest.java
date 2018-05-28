@@ -1,5 +1,6 @@
 package com.yash.moviebookingsystem.serviceimpl;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
@@ -113,13 +114,6 @@ public class ScreenServiceImplTest {
 		screenService.addMovieToScreen(screen, movie);
 	}
 
-	@Test(expected = NullFieldException.class)
-	public void addRowsToScreen_RowsListIsNull_ThrowNullFieldException() {
-		List<Row> rows = null;
-		Screen screen = new Screen(3, "Audi 3");
-		screenService.addRowsToScreen(screen, rows);
-	}
-
 	@Test
 	public void addRowsToScreen_ListOfRowsGiven_ShouldReturnTrue() {
 		Screen screen = new Screen(3, "Audi 3");
@@ -127,6 +121,14 @@ public class ScreenServiceImplTest {
 				.createSittingArrangementForCategory(SittingArrangementService.CATEGORY_GOLD, 6, 14);
 		boolean areRowsAdded = screenService.addRowsToScreen(screen, rows);
 		assertTrue(areRowsAdded);
+	}
+
+	@Test
+	public void getScreens_ShouldReturnListOfScreens() {
+		List<Screen> screens = Arrays.asList(new Screen(1, "Audi 1"), new Screen(2, "Audi 2"));
+		when(screenDAO.retrieve()).thenReturn(screens);
+		List<Screen> screensRetrieved = screenService.getScreens();
+		assertEquals(screens.size(), screensRetrieved.size());
 	}
 
 }

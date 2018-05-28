@@ -6,7 +6,6 @@
 5. Book Ticket
 6. Cancel Booking
 7. Show Seats Availability
-8. Reports
-9. Exit
+8. Exit
 *************************************
 Enter Choice:

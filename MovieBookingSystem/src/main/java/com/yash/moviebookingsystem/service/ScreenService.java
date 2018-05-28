@@ -14,4 +14,6 @@ public interface ScreenService {
 
 	public boolean addRowsToScreen(Screen screen, List<Row> rows);
 
+	public List<Screen> getScreens();
+
 }

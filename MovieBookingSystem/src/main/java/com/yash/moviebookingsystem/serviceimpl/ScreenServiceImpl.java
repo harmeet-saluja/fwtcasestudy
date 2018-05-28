@@ -71,7 +71,6 @@ public class ScreenServiceImpl implements ScreenService {
 	}
 
 	public boolean addRowsToScreen(Screen screen, List<Row> rows) {
-		checkForNullRows(rows);
 		boolean areRowsAdded = false;
 		screen.setRows(rows);
 		if (screen.getRows().size() == rows.size())
@@ -79,9 +78,9 @@ public class ScreenServiceImpl implements ScreenService {
 		return areRowsAdded;
 	}
 
-	private void checkForNullRows(List<Row> rows) {
-		if (rows == null)
-			throw new NullFieldException("Rows cannot be null");
+
+	public List<Screen> getScreens() {
+		return screenDAO.retrieve();
 	}
 
 }
