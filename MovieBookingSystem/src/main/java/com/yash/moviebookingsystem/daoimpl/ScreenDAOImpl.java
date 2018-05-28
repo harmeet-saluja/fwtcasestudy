@@ -20,8 +20,13 @@ public class ScreenDAOImpl implements ScreenDAO {
 	}
 
 	public int update(Screen screen) {
-		// TODO Auto-generated method stub
-		return 0;
+		List<Screen> screens = JSONUtil.retrieveListOfScreen();
+		for (Screen screenRetrieved : screens) {
+			if (screen.getName().equalsIgnoreCase(screenRetrieved.getName()))
+				screens.set(screens.indexOf(screenRetrieved), screen);
+		}
+		JSONUtil.updateScreen(screens);
+		return 1;
 	}
 
 	public List<Screen> retrieve() {

@@ -16,4 +16,6 @@ public interface ScreenService {
 
 	public List<Screen> getScreens();
 
+	public void displaySittingArrangement(Screen screen);
+
 }

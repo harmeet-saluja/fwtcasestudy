@@ -1,5 +1,6 @@
 package com.yash.moviebookingsystem.serviceimpl;
 
+import java.util.Iterator;
 import java.util.List;
 
 import com.yash.moviebookingsystem.dao.ScreenDAO;
@@ -9,6 +10,7 @@ import com.yash.moviebookingsystem.exception.NullFieldException;
 import com.yash.moviebookingsystem.model.Movie;
 import com.yash.moviebookingsystem.model.Row;
 import com.yash.moviebookingsystem.model.Screen;
+import com.yash.moviebookingsystem.model.Seat;
 import com.yash.moviebookingsystem.service.MovieService;
 import com.yash.moviebookingsystem.service.ScreenService;
 import com.yash.moviebookingsystem.service.SittingArrangementService;
@@ -36,15 +38,19 @@ public class ScreenServiceImpl implements ScreenService {
 	}
 
 	private void checkForDuplicateScreenName(Screen screen, List<Screen> screens) {
-		for (Screen screenPresentInFile : screens) {
-			if (screen.getName().equals(screenPresentInFile.getName()))
-				throw new DataAlreadyExistsException("Screen with given name already exists");
+		if (screens != null) {
+			for (Screen screenPresentInFile : screens) {
+				if (screen.getName().equals(screenPresentInFile.getName()))
+					throw new DataAlreadyExistsException("Screen with given name already exists");
+			}
 		}
 	}
 
 	private void checkForTotalScreensNotMoreThanThree(List<Screen> screens) {
-		if (screens.size() > 2)
-			throw new ListSizeExceededException("There cannot be more than three screens");
+		if (screens != null) {
+			if (screens.size() > 2)
+				throw new ListSizeExceededException("There cannot be more than three screens");
+		}
 	}
 
 	private void checkForNullScreen(Screen screen) {
@@ -59,6 +65,8 @@ public class ScreenServiceImpl implements ScreenService {
 			throw new NullFieldException("Shows in movies cannot be null");
 		int rowsAffected = 0;
 		screen.setMovie(movie);
+		System.out.println(screen);
+		System.out.println(movie);
 		int result = screenDAO.update(screen);
 		if (result > 0)
 			rowsAffected = result;
@@ -72,15 +80,31 @@ public class ScreenServiceImpl implements ScreenService {
 
 	public boolean addRowsToScreen(Screen screen, List<Row> rows) {
 		boolean areRowsAdded = false;
-		screen.setRows(rows);
+		if (screen.getRows() == null)
+			screen.setRows(rows);
+		else {
+			screen.getRows().addAll(rows);
+		}
+		screenDAO.update(screen);
 		if (screen.getRows().size() == rows.size())
 			areRowsAdded = true;
 		return areRowsAdded;
 	}
 
-
 	public List<Screen> getScreens() {
 		return screenDAO.retrieve();
 	}
 
+	public void displaySittingArrangement(Screen screen) {
+		System.out.println(
+				"-----------------------------------------Screen This Way--------------------------------------------");
+		for (int rowNum = 0; rowNum < screen.getRows().size(); rowNum++) {
+			Row row = screen.getRows().get(rowNum);
+			System.out.print(row.getCategory() + ":" + (rowNum + 1));
+			for (Seat seat : row.getSeats()) {
+				System.out.print(seat + "\t");
+			}
+			System.out.println();
+		}
+	}
 }

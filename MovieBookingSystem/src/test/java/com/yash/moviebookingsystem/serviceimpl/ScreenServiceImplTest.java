@@ -48,7 +48,7 @@ public class ScreenServiceImplTest {
 
 	@Test
 	public void addScreen_ScreenObjectGiven_ScreenAddedShouldReturnOne() {
-		Screen screen = new Screen(1, "Audi 1");
+		Screen screen = new Screen(3, "Audi 3");
 		when(screenDAO.save(any(Screen.class))).thenReturn(1);
 		int rowsAffected = screenService.addScreen(screen);
 		assertEquals(1, rowsAffected);

@@ -28,7 +28,7 @@ public class ScreenDAOImplTest {
 
 	@Test
 	public void save_ScreenObjectGiven_ShouldReturnOne() {
-		Screen screen = new Screen(2, "Audi 2");
+		Screen screen = new Screen(3, "Audi 3");
 		int rowsAffected = screenDAO.save(screen);
 		assertEquals(1, rowsAffected);
 	}

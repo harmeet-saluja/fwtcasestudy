@@ -107,4 +107,13 @@ public class JSONUtil {
 		return screensJsonList;
 	}
 
+	public static void updateScreen(List<Screen> screens) {
+		Gson gson = new Gson();
+		try {
+			saveConvertedScreenObjectToFile(screenFile, gson.toJson(screens));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
