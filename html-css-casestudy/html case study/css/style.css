@@ -1,0 +1,249 @@
+body {
+    padding: 0px;
+    margin: 0px auto;
+    width: 90%;
+    font-family: Arial, monospace;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.container.header {
+    flex: 1;
+    height: 75px;
+    display: flex;
+    flex-direction: row;
+    /*    border: 1px solid black;*/
+    justify-content: center;
+}
+
+.container.header.logo {
+    flex: 1;
+}
+
+.container.header.logo h2 {
+    color: gray;
+    width: 50%;
+    margin: 20px auto;
+}
+
+.container.header.nav {
+    flex: 4;
+}
+
+.container.header.nav ul li {
+    list-style-type: none;
+    display: inline-block;
+    margin: 10px 8px;
+    font-weight: bold;
+    color: gray;
+}
+
+.container.header.nav ul li a {
+    text-decoration: none;
+    font-weight: bold;
+    color: gray;
+}
+
+
+.container.about-product {
+    display: flex;
+    flex-direction: row;
+    /*    border: 1px solid red;*/
+    height: 450px;
+    background-color: gray;
+}
+
+.container.about-product.description {
+    flex: 1;
+}
+
+.container.about-product.description div {
+    width: 60%;
+    margin: auto auto;
+}
+
+.container.about-product.image {
+    flex: 1;
+}
+
+
+.container.products-list {
+    flex: 1;
+    /*    border: 1px solid aqua;*/
+    display: flex;
+    flex-direction: column;
+    height: 1200px;
+}
+
+.container.products-list.filter {
+    width: 70%;
+    margin: auto auto;
+    flex: 1;
+}
+
+.container.products-list.filter p {
+    margin: auto 0;
+    color: gray;
+    font-size: 20px;
+}
+
+.container.products-list.products {
+    flex: 17;
+    display: flex;
+    flex-direction: column;
+}
+
+.container.products-list.products.row {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 8px;
+}
+
+.container.products-list.products.row.product {
+    flex: 1;
+    /*    border: 1px solid maroon;*/
+    height: 325px;
+    margin: 15px;
+    text-align: center;
+}
+
+.container.products-list.products.row.product.image img {
+    margin: 0 auto 8px;
+}
+
+.container.products-list.products.row.product.image {
+    width: 100%;
+    display: inline-block;
+    margin: 0 auto;
+    color: gray;
+    padding-left: 5px;
+    border: 1px solid lightgray;
+}
+
+.container.products-list.products.row.product.image h4 {
+    margin: 5px 5px 0;
+}
+
+.container.products-list.products.row.product.image a {
+    margin: 5px 5px 0;
+    color: gray;
+    text-decoration: none;
+}
+
+
+/*
+.container.guide {
+    flex: 1;
+    height: 350px;
+    border: 1px solid red;
+}
+
+.container.trending {
+    flex: 1;
+    height: 600px;
+    border: 1px solid black;
+}
+*/
+
+.adBanner {
+    display: flex;
+    background-color: grey;
+    color: white;
+    flex-direction: row;
+    justify-content: center;
+    padding: 4%;
+}
+
+.adBannerContent {
+    width: 45%;
+    text-align: center;
+}
+
+.adButtonLink {
+    margin: 10px auto;
+    border-radius: 80px;
+    color: white;
+    height: 45px;
+    width: 30%;
+    border: 2px solid grey;
+    font-weight: bold;
+
+}
+
+.adButtonLink:hover{
+    cursor: pointer;
+    transition: 2s;
+    transform: scale(1.1,1.1);
+}
+
+.BlogContainer {
+    display: flex;
+    flex-direction: column;
+    color: grey;
+}
+
+.BlogItemContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+.blogItem {
+    /*    border: 1px solid red;*/
+    margin: 10px 0px 10px 0px;
+    flex-basis: 100px;
+}
+
+.blogItem > img {
+    width: 380px;
+}
+
+.blogItemDescription {
+    text-align: justify;
+}
+.container.footer {
+    display: flex;
+    flex-direction: row;
+}
+
+.container.footer.header {
+    flex: 1;
+    color: gray;
+}
+
+.container.footer.header h2 {
+    width: 50%;
+    margin: 8px auto;
+}
+
+.container.footer.links {
+    flex: 4;
+/*
+    width: 100%;
+    margin: 0 auto;
+*/
+}
+
+.container.footer.links ul {
+    width: 50%;
+    margin: 20px auto;
+    margin-right: 0px;
+}
+
+.container.footer.links ul li {
+    list-style-type: none;
+    display: inline-block;
+    margin: 0 20px;
+    color: lightgrey;
+}
+
+.container.footer.links ul li a {
+    text-decoration: none;
+    font-weight: bold;
+    color: gray;
+    font-size: 12px;
+}
